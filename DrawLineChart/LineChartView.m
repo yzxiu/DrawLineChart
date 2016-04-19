@@ -67,7 +67,7 @@
     
     //画红点
     for (NSInteger i = 0; i<5; i++) {
-        [self drawPointWithContext:context color:[UIColor redColor] point:redPoint[i] pointDiameter:3.0];
+        [self drawPointWithContext:context color:[UIColor redColor] point:redPoint[i] pointDiameter:2.0];
     }
     
     //绿点连线
@@ -77,7 +77,8 @@
     [self connectLineWithContext:context points:redPoint colorR:1.0 colorG:0.0 colorB:0.0];
     
     
-    // 2.绘制四条线条
+    
+    //
     CGContextMoveToPoint(context, originX, SCREENHEIGHT-originX);
     CGContextAddLineToPoint(context, [self transformPoint:greenPoint[0]].x, [self transformPoint:greenPoint[0]].y);
     CGContextAddLineToPoint(context, [self transformPoint:greenPoint[1]].x, [self transformPoint:greenPoint[1]].y);
@@ -91,7 +92,7 @@
     //3.渲染
     CGContextDrawPath(context, kCGPathFillStroke);
     
-    // 2.绘制四条线条
+
     //起点
     CGContextMoveToPoint(context, [self transformPoint:redPoint[0]].x, [self transformPoint:redPoint[0]].y);
     
@@ -115,7 +116,7 @@
     //画绿点
     //绿点放到后面,避免被红色块遮挡
     for (NSInteger i = 0; i<5; i++) {
-        [self drawPointWithContext:context color:[UIColor greenColor] point:greenPoint[i] pointDiameter:3.0];
+        [self drawPointWithContext:context color:[UIColor greenColor] point:greenPoint[i] pointDiameter:2.0];
     }
 }
 
