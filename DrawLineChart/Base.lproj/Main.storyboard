@@ -23,11 +23,52 @@
                                     <action selector="sliderValueChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="R3F-dY-gAC"/>
                                 </connections>
                             </slider>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="60" minValue="30" maxValue="90" translatesAutoresizingMaskIntoConstraints="NO" id="3y3-bf-DRh">
+                                <rect key="frame" x="11" y="61" width="161" height="31"/>
+                                <connections>
+                                    <action selector="horizonWChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="ySb-9S-f5F"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="纵向高度(像素)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="heU-ms-sdR">
+                                <rect key="frame" x="195" y="32" width="114" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="横向宽度(像素)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XP4-7z-3HJ">
+                                <rect key="frame" x="195" y="65" width="114" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="横向虚线条数" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="M2m-gv-I9Q">
+                                <rect key="frame" x="13" y="99" width="173" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="纵向虚线条数" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gI7-J7-urU">
+                                <rect key="frame" x="13" y="137" width="173" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8l-Ev-2AF">
+                                <rect key="frame" x="208" y="99" width="93" height="30"/>
+                                <color key="backgroundColor" white="0.88029572147651003" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="确定"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MRj-ut-qxB">
+                                <rect key="frame" x="208" y="136" width="93" height="30"/>
+                                <color key="backgroundColor" white="0.87853921979865768" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="确定"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="slider1" destination="4fc-0D-nhG" id="o5O-Yo-Va5"/>
+                        <outlet property="slider2" destination="3y3-bf-DRh" id="J40-Pg-0TB"/>
+                        <outlet property="textfield1" destination="M2m-gv-I9Q" id="6Hc-9w-Are"/>
+                        <outlet property="textfield2" destination="gI7-J7-urU" id="Kn3-CB-FzQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

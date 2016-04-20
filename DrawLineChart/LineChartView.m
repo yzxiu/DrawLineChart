@@ -36,7 +36,7 @@
     //虚线纵向间隔
     dashlineH = self.verticalH;
     //虚线横向间隔
-    dashWidth = (SCREENWIDTH-50.0-20)/4;
+    dashWidth = self.horizonW;//(SCREENWIDTH-50.0-20)/4;
     
     [self drawBaseWithContext:context];
     [self drawDashLine:context];
@@ -143,7 +143,7 @@
         CGContextAddLineToPoint(context, SCREENWIDTH-originX, originY-dashlineH - i*dashlineH);
     }
     //纵虚线
-    for (NSInteger i = 0; i < 5 ; i++) {                             // 5表示有5条纵虚线
+    for (NSInteger i = 0; i < self.verticalDashLineCount ; i++) {
         CGContextMoveToPoint(context, originX+i*dashWidth, SCREENHEIGHT-dashlineH*(self.horizontalDashLineCount+1)-originX);
         CGContextAddLineToPoint(context, originX+i*dashWidth, SCREENHEIGHT-originX*1);
     }

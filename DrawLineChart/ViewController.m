@@ -14,6 +14,9 @@
 @interface ViewController ()
 
 @property (weak, nonatomic) IBOutlet UISlider *slider1;
+@property (weak, nonatomic) IBOutlet UISlider *slider2;
+@property (weak, nonatomic) IBOutlet UITextField *textfield1;
+@property (weak, nonatomic) IBOutlet UITextField *textfield2;
 
 @end
 
@@ -57,25 +60,20 @@
     NSInteger redCount = sizeof(redPoint)/sizeof(redPoint[0]);
     NSArray *redPoints = [self transformPointArray:redPoint count:redCount];
     
-    
-    
     view = [[LineChartView alloc] initWithFrame:self.view.bounds];
     view.backgroundColor = [UIColor whiteColor];
     view.greenPoints = greenPoints;
     view.redPoints = redPoints;
-    
     //纵向坐标系一小格的高度(与自定义的点的y坐标无关)
-    view.verticalH = 30.0;
-    
+    view.verticalH = 20.0;
     //自定义坐标系每小格的高度(与定义的点有关)
     view.coordinateH = 5.0;
-    
     //横向虚线条数
     view.horizontalDashLineCount = 7;
-    
+    //单元格横向宽度(像素单位)(与定义的点无关,默认两条垂直虚线之间的距离为1)
+    view.horizonW = 40;
     //垂直虚线条数(默认两条垂直虚线之间的距离为1)
-    view.verticalDashLineCount = 5;
-    
+    view.verticalDashLineCount = 8;
     [self.view insertSubview:view atIndex:0];
     [view setNeedsDisplay];
 }
@@ -98,6 +96,11 @@
     [view setNeedsDisplay];
 }
 
+- (IBAction)horizonWChange:(id)sender {
+    float f = _slider2.value;
+    view.horizonW = f;
+    [view setNeedsDisplay];
+}
 
 
 @end
