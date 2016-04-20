@@ -138,13 +138,13 @@
     CGFloat lengths[] = {1,2};
     CGContextSetLineDash(context, dashPhase, lengths, 2);
     //横虚线
-    for (NSInteger i = 0; i < 4 ; i++) {
+    for (NSInteger i = 0; i < self.horizontalDashLineCount; i++) {
         CGContextMoveToPoint(context, originX, originY-dashlineH - i*dashlineH);
         CGContextAddLineToPoint(context, SCREENWIDTH-originX, originY-dashlineH - i*dashlineH);
     }
     //纵虚线
-    for (NSInteger i = 0; i < 5 ; i++) {
-        CGContextMoveToPoint(context, originX+i*dashWidth, SCREENHEIGHT-originX*6);
+    for (NSInteger i = 0; i < 5 ; i++) {                             // 5表示有5条纵虚线
+        CGContextMoveToPoint(context, originX+i*dashWidth, SCREENHEIGHT-dashlineH*(self.horizontalDashLineCount+1)-originX);
         CGContextAddLineToPoint(context, originX+i*dashWidth, SCREENHEIGHT-originX*1);
     }
     CGContextStrokePath(context);
@@ -202,11 +202,12 @@
 
 /**
  *  自定义坐标系转换成图表坐标系
+ *  (dashlineH/5) 表示 屏幕像素高度 / 自定义坐标系每一小格的高度
  */
 -(CGPoint)transformPoint:(CGPoint)point{
     CGPoint afterPoint;
     afterPoint.x = originX + (point.x-1)*dashWidth;
-    afterPoint.y = originY - (point.y*6);
+    afterPoint.y = originY - (point.y* (dashlineH/self.coordinateH));
     return afterPoint;
 }
 

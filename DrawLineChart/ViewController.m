@@ -13,9 +13,13 @@
 
 @interface ViewController ()
 
+@property (weak, nonatomic) IBOutlet UISlider *slider1;
+
 @end
 
-@implementation ViewController
+@implementation ViewController{
+    LineChartView *view;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -40,10 +44,10 @@
     
     CGPoint redPoint[] =
     {
-        CGPointMake(1, 8),
-        CGPointMake(2, 3),
-        CGPointMake(3, 5),
-        CGPointMake(4, 17),
+        CGPointMake(1, 23),
+        CGPointMake(2, 16),
+        CGPointMake(3, 30),
+        CGPointMake(4, 12),
         CGPointMake(5, 16),
     };
     
@@ -55,12 +59,24 @@
     
     
     
-    LineChartView *view = [[LineChartView alloc] initWithFrame:self.view.bounds];
+    view = [[LineChartView alloc] initWithFrame:self.view.bounds];
     view.backgroundColor = [UIColor whiteColor];
     view.greenPoints = greenPoints;
     view.redPoints = redPoints;
+    
+    //纵向坐标系一小格的高度(与自定义的点的y坐标无关)
     view.verticalH = 30.0;
-    [self.view addSubview:view];
+    
+    //自定义坐标系每小格的高度(与定义的点有关)
+    view.coordinateH = 5.0;
+    
+    //横向虚线条数
+    view.horizontalDashLineCount = 7;
+    
+    //垂直虚线条数(默认两条垂直虚线之间的距离为1)
+    view.verticalDashLineCount = 5;
+    
+    [self.view insertSubview:view atIndex:0];
     [view setNeedsDisplay];
 }
 
@@ -76,6 +92,11 @@
     return pointArray;
 }
 
+- (IBAction)sliderValueChange:(id)sender {
+    float f = _slider1.value;
+    view.verticalH = f;
+    [view setNeedsDisplay];
+}
 
 
 

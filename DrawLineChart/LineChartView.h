@@ -11,8 +11,15 @@
 @interface LineChartView : UIView
 
 @property(nonatomic,strong)NSArray *greenPoints; //绿点坐标数组
-@property(nonatomic,strong)NSArray *redPoints;
 
-@property(nonatomic,assign)CGFloat verticalH; //纵向单元格高度(像素单位)
+@property(nonatomic,strong)NSArray *redPoints; //绿色点数组
+
+@property(nonatomic,assign)CGFloat verticalH; //纵向单元格高度(像素单位,与定义的点无关)
+
+@property(nonatomic,assign)CGFloat coordinateH; //自定义坐标系每小格的高度(与定义的点有关)
+
+@property(nonatomic,assign)NSInteger horizontalDashLineCount; //横向虚线条数
+
+@property(nonatomic,assign)NSInteger verticalDashLineCount; //垂直虚线条数(默认两条垂直虚线之间的距离为1)
 
 @end
