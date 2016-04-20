@@ -7,6 +7,7 @@
 //
 
 #import "LineChartView.h"
+#import "PointModel.h"
 
 #define SCREENHEIGHT  [UIScreen mainScreen].bounds.size.height
 #define SCREENWIDTH  [UIScreen mainScreen].bounds.size.width
@@ -33,85 +34,42 @@
     originX = 20.0;
     originY = SCREENHEIGHT-originX;
     //虚线纵向间隔
-    dashlineH = 20.0;
+    dashlineH = self.verticalH;
     //虚线横向间隔
     dashWidth = (SCREENWIDTH-50.0-20)/4;
     
     [self drawBaseWithContext:context];
     [self drawDashLine:context];
     
-    /**
-     *  定义点数组. 注:这里不能使用oc数组(nsarray),只能使用c的结构体数组
-     *  这里的坐标采用表格里的自定义坐标系
-     *  X坐标, 为整数1,2,3,4,5 分别代表2月 ~ 6月
-     *  Y坐标, 范围:0~25
-     *  @param pointDiameter  点的直径
-     */
-    CGPoint greenPoint[] =
-    {
-        CGPointMake(1, 3),
-        CGPointMake(2, 10),
-        CGPointMake(3, 8),
-        CGPointMake(4, 7),
-        CGPointMake(5, 13),
-    };
+    CGPoint greenPoint[self.greenPoints.count];
+    for (NSInteger i = 0; i<self.greenPoints.count; i++) {
+        PointModel *model = self.greenPoints[i];
+        greenPoint[i] = CGPointMake(model.x, model.y);
+    }
     
-    CGPoint redPoint[] =
-    {
-        CGPointMake(1, 8),
-        CGPointMake(2, 16),
-        CGPointMake(3, 15),
-        CGPointMake(4, 17),
-        CGPointMake(5, 16),
-    };
-    
+    CGPoint redPoint[self.redPoints.count];
+    for (NSInteger i = 0; i<self.redPoints.count; i++) {
+        PointModel *model = self.redPoints[i];
+        redPoint[i] = CGPointMake(model.x, model.y);
+    }
+
     //画红点
     for (NSInteger i = 0; i<5; i++) {
         [self drawPointWithContext:context color:[UIColor redColor] point:redPoint[i] pointDiameter:2.0];
     }
     
     //绿点连线
-    [self connectLineWithContext:context points:greenPoint colorR:0.0 colorG:1.0 colorB:0.0];
+    NSInteger count = sizeof(greenPoint)/sizeof(greenPoint[0]);
+    [self connectLineWithContext:context points:greenPoint count:(NSInteger)count colorR:0.0 colorG:1.0 colorB:0.0];
     
     //红点连线
-    [self connectLineWithContext:context points:redPoint colorR:1.0 colorG:0.0 colorB:0.0];
+    NSInteger count1 = sizeof(redPoint)/sizeof(redPoint[0]);
+    [self connectLineWithContext:context points:redPoint count:(NSInteger)count1 colorR:1.0 colorG:0.0 colorB:0.0];
     
+    //绘制绿色块
+    [self drawBottomColorBlockWithContext:context originPoint:CGPointMake(originX, SCREENHEIGHT-originX) points:greenPoint count:count color:[UIColor colorWithRed:0.0 green:0.7 blue:0.0 alpha:0.12]];
     
-    
-    //
-    CGContextMoveToPoint(context, originX, SCREENHEIGHT-originX);
-    CGContextAddLineToPoint(context, [self transformPoint:greenPoint[0]].x, [self transformPoint:greenPoint[0]].y);
-    CGContextAddLineToPoint(context, [self transformPoint:greenPoint[1]].x, [self transformPoint:greenPoint[1]].y);
-    CGContextAddLineToPoint(context, [self transformPoint:greenPoint[2]].x, [self transformPoint:greenPoint[2]].y);
-    CGContextAddLineToPoint(context, [self transformPoint:greenPoint[3]].x, [self transformPoint:greenPoint[3]].y);
-    CGContextAddLineToPoint(context, [self transformPoint:greenPoint[4]].x, [self transformPoint:greenPoint[4]].y);
-    CGContextAddLineToPoint(context, [self transformPoint:greenPoint[4]].x, SCREENHEIGHT-originX);
-    CGContextAddLineToPoint(context, originX, SCREENHEIGHT-originX);
-    CGContextClosePath(context);
-    [[UIColor colorWithRed:0.0 green:0.7 blue:0.0 alpha:0.15] set];
-    //3.渲染
-    CGContextDrawPath(context, kCGPathFillStroke);
-    
-
-    //起点
-    CGContextMoveToPoint(context, [self transformPoint:redPoint[0]].x, [self transformPoint:redPoint[0]].y);
-    
-    CGContextAddLineToPoint(context, [self transformPoint:redPoint[1]].x, [self transformPoint:redPoint[1]].y);
-    CGContextAddLineToPoint(context, [self transformPoint:redPoint[2]].x, [self transformPoint:redPoint[2]].y);
-    CGContextAddLineToPoint(context, [self transformPoint:redPoint[3]].x, [self transformPoint:redPoint[3]].y);
-    CGContextAddLineToPoint(context, [self transformPoint:redPoint[4]].x, [self transformPoint:redPoint[4]].y);
-    
-    CGContextAddLineToPoint(context, [self transformPoint:greenPoint[4]].x, [self transformPoint:greenPoint[4]].y);
-    CGContextAddLineToPoint(context, [self transformPoint:greenPoint[3]].x, [self transformPoint:greenPoint[3]].y);
-    CGContextAddLineToPoint(context, [self transformPoint:greenPoint[2]].x, [self transformPoint:greenPoint[2]].y);
-    CGContextAddLineToPoint(context, [self transformPoint:greenPoint[1]].x, [self transformPoint:greenPoint[1]].y);
-    CGContextAddLineToPoint(context, [self transformPoint:greenPoint[0]].x, [self transformPoint:greenPoint[0]].y);
-    CGContextAddLineToPoint(context, [self transformPoint:redPoint[0]].x, [self transformPoint:redPoint[0]].y);
-    //    CGContextAddLineToPoint(context, originX, SCREENHEIGHT-originX);
-    CGContextClosePath(context);
-    [[UIColor colorWithRed:0.7 green:0.0 blue:0.0 alpha:0.15] set];
-    //3.渲染
-    CGContextDrawPath(context, kCGPathFillStroke);
+    [self drawColorBlockInLinesWithContext:context originPoint:CGPointMake([self transformPoint:redPoint[0]].x, [self transformPoint:redPoint[0]].y) points1:redPoint points2:greenPoint count1:count1 count2:count color:[UIColor colorWithRed:0.7 green:0.0 blue:0.0 alpha:0.12]];
     
     //画绿点
     //绿点放到后面,避免被红色块遮挡
@@ -119,6 +77,52 @@
         [self drawPointWithContext:context color:[UIColor greenColor] point:greenPoint[i] pointDiameter:2.0];
     }
 }
+
+
+/**
+ *  绘制下方色块
+ *
+ *  @param context     context
+ *  @param originPoint 原点
+ *  @param points      线上面的点
+ *  @param count       线的点数
+ *  @param color       色块的颜色(建议透明)
+ */
+- (void)drawBottomColorBlockWithContext:(CGContextRef)context originPoint:(CGPoint)originPoint points:(CGPoint *)points count:(NSInteger)count color:(UIColor *)color{
+    //原点
+    CGContextMoveToPoint(context, originPoint.x, originPoint.y);
+    //线上面的点
+    for (NSInteger i = 0; i<count; i++) {
+        CGContextAddLineToPoint(context, [self transformPoint:points[i]].x, [self transformPoint:points[i]].y);
+    }
+    //坐标系右下方的店
+    CGContextAddLineToPoint(context, [self transformPoint:points[4]].x, SCREENHEIGHT-originX);
+    //回到原点(即左下角的店)
+    CGContextAddLineToPoint(context, originPoint.x, originPoint.y);
+    CGContextClosePath(context);
+    [color set];
+    CGContextDrawPath(context, kCGPathFillStroke);
+}
+
+//绘制两线之间的色块
+- (void)drawColorBlockInLinesWithContext:(CGContextRef)context originPoint:(CGPoint)originPoint points1:(CGPoint *)points1 points2:(CGPoint *)points2 count1:(NSInteger)count1 count2:(NSInteger)count2 color:(UIColor *)color{
+    //原点
+    CGContextMoveToPoint(context, originPoint.x, originPoint.y);
+    //线1上面的点
+    for (NSInteger i = 0; i<count1; i++) {
+        CGContextAddLineToPoint(context, [self transformPoint:points1[i]].x, [self transformPoint:points1[i]].y);
+    }
+    //线2上面的店
+    for (NSInteger i = 0; i<count2; i++) {
+        CGContextAddLineToPoint(context, [self transformPoint:points2[count2-i-1]].x, [self transformPoint:points2[count2-i-1]].y);
+    }
+    //回到原点(即左下角的店)
+    CGContextAddLineToPoint(context, originPoint.x, originPoint.y);
+    CGContextClosePath(context);
+    [color set];
+    CGContextDrawPath(context, kCGPathFillStroke);
+}
+
 
 //画基本坐标
 -(void)drawBaseWithContext:(CGContextRef)context{
@@ -175,13 +179,14 @@
  *
  *  @param context context
  *  @param point   点数组,注意这里是C数组
+ *
  *  @param R       r
  *  @param G       g
  *  @param B       b
  */
--(void)connectLineWithContext:(CGContextRef)context points:(CGPoint *)point colorR:(CGFloat)R colorG:(CGFloat)G colorB:(CGFloat)B{
+-(void)connectLineWithContext:(CGContextRef)context points:(CGPoint *)point count:(NSInteger)count1 colorR:(CGFloat)R colorG:(CGFloat)G colorB:(CGFloat)B{
     CGContextSetRGBStrokeColor(context, R, G, B, 1.0);
-    int count = sizeof(point) / sizeof(point[0]);
+    NSInteger count = count1;
     CGPoint greenLines[count];
     for (NSInteger i = 0; i< count; i++) {
         CGPoint afterPoint = [self transformPoint:point[i]];
@@ -201,7 +206,7 @@
 -(CGPoint)transformPoint:(CGPoint)point{
     CGPoint afterPoint;
     afterPoint.x = originX + (point.x-1)*dashWidth;
-    afterPoint.y = originY - (point.y*4);
+    afterPoint.y = originY - (point.y*6);
     return afterPoint;
 }
 

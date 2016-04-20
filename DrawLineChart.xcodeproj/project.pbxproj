@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F0B9CF5B1CC7346500D58950 /* PointModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F0B9CF5A1CC7346500D58950 /* PointModel.m */; };
 		F0C9A6A71CC69FB400DA71C5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C9A6A61CC69FB400DA71C5 /* main.m */; };
 		F0C9A6AA1CC69FB400DA71C5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C9A6A91CC69FB400DA71C5 /* AppDelegate.m */; };
 		F0C9A6AD1CC69FB400DA71C5 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F0C9A6AC1CC69FB400DA71C5 /* ViewController.m */; };
@@ -36,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F0B9CF591CC7346500D58950 /* PointModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointModel.h; sourceTree = "<group>"; };
+		F0B9CF5A1CC7346500D58950 /* PointModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointModel.m; sourceTree = "<group>"; };
 		F0C9A6A21CC69FB400DA71C5 /* DrawLineChart.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawLineChart.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0C9A6A61CC69FB400DA71C5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F0C9A6A81CC69FB400DA71C5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -110,6 +113,8 @@
 				F0C9A6AC1CC69FB400DA71C5 /* ViewController.m */,
 				F0C9A6DB1CC6A00000DA71C5 /* LineChartView.h */,
 				F0C9A6DC1CC6A00000DA71C5 /* LineChartView.m */,
+				F0B9CF591CC7346500D58950 /* PointModel.h */,
+				F0B9CF5A1CC7346500D58950 /* PointModel.m */,
 				F0C9A6AE1CC69FB400DA71C5 /* Main.storyboard */,
 				F0C9A6B11CC69FB400DA71C5 /* Assets.xcassets */,
 				F0C9A6B31CC69FB400DA71C5 /* LaunchScreen.storyboard */,
@@ -276,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0C9A6AD1CC69FB400DA71C5 /* ViewController.m in Sources */,
+				F0B9CF5B1CC7346500D58950 /* PointModel.m in Sources */,
 				F0C9A6AA1CC69FB400DA71C5 /* AppDelegate.m in Sources */,
 				F0C9A6A71CC69FB400DA71C5 /* main.m in Sources */,
 				F0C9A6DD1CC6A00000DA71C5 /* LineChartView.m in Sources */,
@@ -504,6 +510,7 @@
 				F0C9A6D11CC69FB400DA71C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F0C9A6D21CC69FB400DA71C5 /* Build configuration list for PBXNativeTarget "DrawLineChartTests" */ = {
 			isa = XCConfigurationList;
@@ -512,6 +519,7 @@
 				F0C9A6D41CC69FB400DA71C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F0C9A6D51CC69FB400DA71C5 /* Build configuration list for PBXNativeTarget "DrawLineChartUITests" */ = {
 			isa = XCConfigurationList;
@@ -520,6 +528,7 @@
 				F0C9A6D71CC69FB400DA71C5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
