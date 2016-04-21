@@ -141,5 +141,32 @@
     [_textfield2 resignFirstResponder];
     [_textfield3 resignFirstResponder];
 }
+-(void)createRandomPoints{
+    NSMutableArray *redpointsArray = [NSMutableArray array];
+    NSMutableArray *greenPointArray = [NSMutableArray array];
+    for (int i = 0; i<view.verticalDashLineCount; i++) {
+        PointModel *redmodel = [[PointModel alloc] init];
+        PointModel *greenModel = [[PointModel alloc] init];
+        redmodel.x = i;
+        greenModel.x = i;
+        redmodel.y = [self getRandomNumber:view.horizontalDashLineCount*view.coordinateH/3 to:view.horizontalDashLineCount*view.coordinateH];
+        greenModel.y = [self getRandomNumber:0 to:view.horizontalDashLineCount*view.coordinateH*2/3];
+        [redpointsArray addObject:redmodel];
+        [greenPointArray addObject:greenModel];
+    }
+    view.redPoints = nil;
+    view.redPoints = redpointsArray;
+    view.greenPoints = nil;
+    view.greenPoints = greenPointArray;
+    [view setNeedsDisplay];
+}
+
+- (IBAction)createRandomLines:(id)sender {
+    [self createRandomPoints];
+}
+                 
+-(int)getRandomNumber:(int)from to:(int)to{
+    return (int)(from + (arc4random() % (to-from + 1)));
+}
 
 @end
