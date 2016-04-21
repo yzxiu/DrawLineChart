@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *slider2;
 @property (weak, nonatomic) IBOutlet UITextField *textfield1;
 @property (weak, nonatomic) IBOutlet UITextField *textfield2;
+@property (weak, nonatomic) IBOutlet UITextField *textfield3;
 
 @end
 
@@ -26,32 +27,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    
+
     /**
      *  定义点数组. 注:这里不能使用oc数组(nsarray),只能使用c的结构体数组
      *  这里的坐标采用表格里的自定义坐标系
      *  X坐标, 为整数1,2,3,4,5 分别代表2月 ~ 6月
      *  Y坐标, 范围:0~25
      *  @param pointDiameter  点的直径
+     *  建议两条线的点数相等
+     *  建议每条线的点数与纵向虚线条数相等
      */
     
     CGPoint greenPoint[] =
     {
-        CGPointMake(1, 3),
-        CGPointMake(2, 10),
-        CGPointMake(3, 8),
-        CGPointMake(4, 7),
-        CGPointMake(5, 13),
+        CGPointMake(0, 3),
+        CGPointMake(1, 10),
+        CGPointMake(2, 8),
+        CGPointMake(3, 7),
+        CGPointMake(4, 13),
+        CGPointMake(5, 8),
+        CGPointMake(6, 7),
+        CGPointMake(7, 13),
     };
     
     CGPoint redPoint[] =
     {
-        CGPointMake(1, 23),
-        CGPointMake(2, 16),
-        CGPointMake(3, 30),
-        CGPointMake(4, 12),
+        CGPointMake(0, 23),
+        CGPointMake(1, 16),
+        CGPointMake(2, 30),
+        CGPointMake(3, 12),
+        CGPointMake(4, 16),
         CGPointMake(5, 16),
+        CGPointMake(6, 9),
+        CGPointMake(7, 16),
     };
     
     //构建oc点数组
@@ -74,6 +82,12 @@
     view.horizonW = 40;
     //垂直虚线条数(默认两条垂直虚线之间的距离为1)
     view.verticalDashLineCount = 8;
+    //左边标题
+    view.leftTitle = @"简单折线";
+    //红色标题
+    view.redTitle = @"我是红线";
+    //绿色标题
+    view.greenTitle = @"我是绿线";
     [self.view insertSubview:view atIndex:0];
     [view setNeedsDisplay];
 }
@@ -102,5 +116,30 @@
     [view setNeedsDisplay];
 }
 
+- (IBAction)lineCount1:(id)sender {
+    NSInteger count = _textfield1.text.integerValue;
+    view.horizontalDashLineCount = count;
+    [view setNeedsDisplay];
+    
+    [_textfield1 resignFirstResponder];
+    [_textfield2 resignFirstResponder];
+    [_textfield3 resignFirstResponder];
+}
+- (IBAction)linecount2:(id)sender {
+    NSInteger count = _textfield2.text.integerValue;
+    view.verticalDashLineCount = count;
+    [view setNeedsDisplay];
+    [_textfield1 resignFirstResponder];
+    [_textfield2 resignFirstResponder];
+    [_textfield3 resignFirstResponder];
+}
+- (IBAction)coordinateH:(id)sender {
+    NSInteger count = _textfield3.text.integerValue;
+    view.coordinateH = count;
+    [view setNeedsDisplay];
+    [_textfield1 resignFirstResponder];
+    [_textfield2 resignFirstResponder];
+    [_textfield3 resignFirstResponder];
+}
 
 @end

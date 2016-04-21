@@ -24,4 +24,10 @@
 
 @property(nonatomic,assign)NSInteger verticalDashLineCount; //垂直虚线条数(默认两条垂直虚线之间的距离为1)
 
+@property(nonatomic,copy)NSString *leftTitle; //左边标题
+
+@property(nonatomic,copy)NSString *redTitle; //红线标题
+
+@property(nonatomic,copy)NSString *greenTitle; //绿色标题
+
 @end

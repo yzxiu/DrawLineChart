@@ -21,14 +21,8 @@
     CGFloat dashWidth;
 }
 
-
 - (void)drawRect:(CGRect)rect {
-    // Drawing code
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetRGBStrokeColor(context, 0.3, 0.3, 0.3, 1.0);
-    CGContextSetLineWidth(context, 0.5);
-    
+
     //坐标系
     //左下角起点
     originX = 20.0;
@@ -38,8 +32,20 @@
     //虚线横向间隔
     dashWidth = self.horizonW;//(SCREENWIDTH-50.0-20)/4;
     
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetRGBStrokeColor(context, 0.3, 0.3, 0.3, 1.0);
+    CGContextSetLineWidth(context, 0.5);
+
+    //基本坐标
     [self drawBaseWithContext:context];
+    //虚线
     [self drawDashLine:context];
+    //垂直标题
+    [self drawVerticalTitle];
+    //水平方向标题
+    [self drawHorizontalTitle];
+    //表格信息
+    [self drawChartInfo:context];
     
     CGPoint greenPoint[self.greenPoints.count];
     for (NSInteger i = 0; i<self.greenPoints.count; i++) {
@@ -54,7 +60,7 @@
     }
 
     //画红点
-    for (NSInteger i = 0; i<5; i++) {
+    for (NSInteger i = 0; i<self.redPoints.count; i++) {
         [self drawPointWithContext:context color:[UIColor redColor] point:redPoint[i] pointDiameter:2.0];
     }
     
@@ -73,11 +79,10 @@
     
     //画绿点
     //绿点放到后面,避免被红色块遮挡
-    for (NSInteger i = 0; i<5; i++) {
+    for (NSInteger i = 0; i<self.greenPoints.count; i++) {
         [self drawPointWithContext:context color:[UIColor greenColor] point:greenPoint[i] pointDiameter:2.0];
     }
 }
-
 
 /**
  *  绘制下方色块
@@ -96,7 +101,7 @@
         CGContextAddLineToPoint(context, [self transformPoint:points[i]].x, [self transformPoint:points[i]].y);
     }
     //坐标系右下方的店
-    CGContextAddLineToPoint(context, [self transformPoint:points[4]].x, SCREENHEIGHT-originX);
+    CGContextAddLineToPoint(context, [self transformPoint:points[self.greenPoints.count-1]].x, SCREENHEIGHT-originX);
     //回到原点(即左下角的店)
     CGContextAddLineToPoint(context, originPoint.x, originPoint.y);
     CGContextClosePath(context);
@@ -122,7 +127,6 @@
     [color set];
     CGContextDrawPath(context, kCGPathFillStroke);
 }
-
 
 //画基本坐标
 -(void)drawBaseWithContext:(CGContextRef)context{
@@ -206,9 +210,63 @@
  */
 -(CGPoint)transformPoint:(CGPoint)point{
     CGPoint afterPoint;
-    afterPoint.x = originX + (point.x-1)*dashWidth;
+    afterPoint.x = originX + (point.x)*dashWidth;
     afterPoint.y = originY - (point.y* (dashlineH/self.coordinateH));
     return afterPoint;
+}
+
+/**
+ *  绘制竖直方向的标题
+ */
+-(void)drawVerticalTitle{
+    for (NSInteger i = 0; i<(self.horizontalDashLineCount+1); i++) {
+        NSString *titleStr = [NSString stringWithFormat:@"%d",(int)((i)*self.coordinateH)];
+        if (i == 0) {
+            [@"0" drawInRect:CGRectMake(1+5, SCREENHEIGHT-originX-self.verticalH*(i)-3, 18, 15) withAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15.0],NSForegroundColorAttributeName:[UIColor blackColor]}];
+        }else{
+            CGFloat XX = 1;
+            if ((i)*self.coordinateH < 10) {
+                XX+=5;
+            }
+            [titleStr drawInRect:CGRectMake(XX, SCREENHEIGHT-originX-self.verticalH*(i)-9, 18, 15) withAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14.0],NSForegroundColorAttributeName:[UIColor blackColor]}];
+        }
+    }
+}
+
+/**
+ *  绘制水平方向标题
+ */
+-(void)drawHorizontalTitle{
+    for (NSInteger i = 0; i < self.verticalDashLineCount; i++) {
+        NSString *titleStr = [NSString stringWithFormat:@"%ld",(long)i];
+        if (i == 0) {
+        }else{
+            float XX = 20-9+i*self.horizonW;
+            if (i < 10) {
+                XX+=3;
+            }
+            [titleStr drawInRect:CGRectMake(XX, SCREENHEIGHT-originX+1, 18, 15) withAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14.0],NSForegroundColorAttributeName:[UIColor blackColor]}];
+        }
+    }
+}
+
+/**
+ *  绘制表格信息
+ */
+-(void)drawChartInfo:(CGContextRef)context{
+    [self.leftTitle drawInRect:CGRectMake(10, SCREENHEIGHT-dashlineH*(self.horizontalDashLineCount+1)-originX-35, 150, 25) withAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:18.0],NSForegroundColorAttributeName:[UIColor blackColor]}];
+    CGPoint point1 = CGPointMake(SCREENWIDTH - 75, SCREENHEIGHT-dashlineH*(self.horizontalDashLineCount+1)-originX-35);
+    CGContextSetRGBStrokeColor(context, 1.0, 1.0, 1.0, 0.0);
+    CGContextAddArc(context, point1.x, point1.y, 5, 0, M_PI*2, 1);
+    CGContextSetFillColorWithColor(context, [UIColor redColor].CGColor);
+    CGContextDrawPath(context, kCGPathFillStroke);
+    [self.redTitle drawInRect:CGRectMake(SCREENWIDTH - 75 + 12, SCREENHEIGHT-dashlineH*(self.horizontalDashLineCount+1)-originX-41.5 , 60, 12) withAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:10.0],NSForegroundColorAttributeName:[UIColor blackColor]}];
+    CGPoint point2 = CGPointMake(SCREENWIDTH - 75, SCREENHEIGHT-dashlineH*(self.horizontalDashLineCount+1)-originX-15);
+    CGContextSetRGBStrokeColor(context, 1.0, 1.0, 1.0, 0.0);
+    CGContextAddArc(context, point2.x, point2.y, 5, 0, M_PI*2, 1);
+    CGContextSetFillColorWithColor(context, [UIColor greenColor].CGColor);
+    CGContextDrawPath(context, kCGPathFillStroke);
+    [self.greenTitle drawInRect:CGRectMake(SCREENWIDTH - 75 + 12, SCREENHEIGHT-dashlineH*(self.horizontalDashLineCount+1)-originX-21.5 , 60, 12) withAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:10.0],NSForegroundColorAttributeName:[UIColor blackColor]}];
 }
 
 @end
