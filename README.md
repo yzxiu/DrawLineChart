@@ -5,4 +5,4 @@
 ![image](https://github.com/q946666800/DrawLineChart/blob/master/screenshots/Simulator%20Screen%20Shot%202016%E5%B9%B44%E6%9C%8821%E6%97%A5%20%E4%B8%8B%E5%8D%883.11.19.png)
 
 
-本demo仅供新手参考,如果对您有帮助,给给个星星,谢谢^_^
+本demo仅供新手参考,如果对您有帮助,请给个星星,谢谢^_^
