@@ -28,6 +28,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    
+    
     /**
      *  定义点数组. 注:这里不能使用oc数组(nsarray),只能使用c的结构体数组
      *  这里的坐标采用表格里的自定义坐标系
